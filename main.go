@@ -47,10 +47,25 @@ func main() {
 	third := strings.ReplaceAll(second, ";", "]")
 	final_content := strings.ReplaceAll(third, "\n", "")
 	var json_data interface{}
-	fmt.Println(final_content)
 	err = json.Unmarshal([]byte(final_content), &json_data)
 	if err != nil {
 		log.Fatal("Error unmarshalling JSON:", err)
 	}
-	fmt.Println(json_data)
+	list, ok := json_data.([]interface{})
+	if !ok {
+		log.Fatal("Error converting data")
+	}
+	for _, item := range list[:1] {
+		items, ok := item.(map[string]interface{})
+		if !ok {
+			log.Fatal("Error converting item")
+		}
+		for _, subitem := range items["items"].([]interface{}) {
+			subitems, ok := subitem.(map[string]interface{})
+			if !ok {
+				log.Fatal("Error converting subitem")
+			}
+			fmt.Println(subitems["name"])
+		}
+	}
 }
