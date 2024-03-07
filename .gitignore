@@ -1,0 +1,6 @@
+# go
+# .gitignore
+
+data.json
+*.db
+*.sqlite3
