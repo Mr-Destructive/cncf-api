@@ -30,10 +30,15 @@ func loadEnv() map[string]string {
 }
 
 func GetDb() *sql.DB {
-	envs := loadEnv()
-	dbName := envs["TURSO_DB_NAME"]
-	orgName := envs["TURSO_ORG_NAME"]
-	authToken := envs["TURSO_API_TOKEN"]
+	//envs := loadEnv()
+	/*
+		dbName := envs["TURSO_DB_NAME"]
+		orgName := envs["TURSO_ORG_NAME"]
+		authToken := envs["TURSO_API_TOKEN"]
+	*/
+	dbName := os.Getenv("TURSO_DB_NAME")
+	orgName := os.Getenv("TURSO_ORG_NAME")
+	authToken := os.Getenv("TURSO_API_TOKEN")
 	url := fmt.Sprintf("libsql://%s-%s.turso.io?authToken=%s", dbName, orgName, authToken)
 
 	db, err := sql.Open("libsql", url)
