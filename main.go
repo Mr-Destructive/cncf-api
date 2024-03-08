@@ -2,13 +2,15 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/mr-destructive/cncf-api/data"
+	handler "github.com/mr-destructive/cncf-landscape-api/api"
+	"github.com/mr-destructive/cncf-landscape-api/data"
 )
 
 func crawler(linkUrl string) string {
@@ -146,4 +148,9 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 func scrapeUpdateRegistry(w http.ResponseWriter, r *http.Request) {
 	updateRegistry()
 	w.WriteHeader(http.StatusOK)
+}
+
+func handleRequests(port int) {
+	http.HandleFunc("/", handler.Handler)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", port), nil))
 }

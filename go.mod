@@ -1,4 +1,4 @@
-module github.com/mr-destructive/cncf-api
+module github.com/mr-destructive/cncf-landscape-api
 
 go 1.21.5
 
